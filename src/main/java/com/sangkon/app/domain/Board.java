@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Builder
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @AllArgsConstructor
@@ -22,6 +23,7 @@ public class Board {
 
     @Enumerated(EnumType.STRING)
     private BoardType boardType;
+
 
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
