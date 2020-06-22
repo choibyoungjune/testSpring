@@ -8,8 +8,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
 
 @Controller
 public class BoardController {
@@ -28,17 +31,16 @@ public class BoardController {
 
     @GetMapping("/board")
     public String getInputForm(Model model) {
-        model.addAttribute("boardForm", new Board());
+        model.addAttribute("board", new Board());
         return "board/form";
     }
 
     @PostMapping("/board")
-    public String setInputForm(Board boardForm) {
-        System.out.println(boardForm.getTitle());
-        System.out.println(boardForm.getSubTitle());
-        System.out.println(boardForm.getContent());
-        System.out.println(boardForm.getBoardType());
-
+    public String setInputForm(@Valid Board board, BindingResult result) {
+        if(result.hasErrors()) {
+            return "board/form";
+        }
+        boardService.saveBoard(board);
         return "redirect:/board";
     }
 }
